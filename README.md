@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # me_track
 
 A new Flutter project.
@@ -14,3 +15,7 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+=======
+# MeTrack
+Simple app, where you can track your habbits.
+>>>>>>> 94b3f4560fa2f4464afe03836f897e7f51e6e468
