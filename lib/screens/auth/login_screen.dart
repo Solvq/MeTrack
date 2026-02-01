@@ -16,7 +16,7 @@ class LoginScreen extends StatelessWidget {
 
               // Заголовок
               const Text(
-                'MeTrack',
+                'HabbitTracker',
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
@@ -25,13 +25,7 @@ class LoginScreen extends StatelessWidget {
 
               const SizedBox(height: 8),
 
-              const Text(
-                'Следить за своими привычками',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey,
-                ),
-              ),
+             
 
               const SizedBox(height: 32),
 
