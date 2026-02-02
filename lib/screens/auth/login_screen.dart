@@ -1,7 +1,40 @@
 import 'package:flutter/material.dart';
+import 'register_screen.dart';
+// import 'home_screen.dart'; // подключить позже
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  void _login() {
+    if (!_formKey.currentState!.validate()) return;
+
+    // Здесь позже будет Firebase / API
+    debugPrint('Email: ${_emailController.text}');
+    debugPrint('Password: ${_passwordController.text}');
+
+    // TODO: после входа -> HomeScreen
+    // Navigator.pushReplacement(
+    //   context,
+    //   MaterialPageRoute(builder: (_) => const HomeScreen()),
+    // );
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -9,75 +42,108 @@ class LoginScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(height: 40),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(height: 40),
 
-              // Заголовок
-              const Text(
-                'HabbitTracker',
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-
-              const SizedBox(height: 8),
-
-             
-
-              const SizedBox(height: 32),
-
-              // Email
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-
-              const SizedBox(height: 16),
-
-              // Пароль
-              TextFormField(
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Пароль',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-
-              const SizedBox(height: 32),
-
-              // Кнопка входа
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+                const Text(
+                  'MeTrack',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                child: const Text('Войти'),
-              ),
 
-              const SizedBox(height: 16),
+                const SizedBox(height: 8),
 
-              // Переход к регистрации
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Нет аккаунта?'),
-                  TextButton(
-  onPressed: () {
-    Navigator.pop(context);
-  },
-  child: const Text('Зарегистрироваться'),
-),
-                ],
-              ),
-            ],
+                const Text(
+                  'Вход в аккаунт',
+                  style: TextStyle(color: Colors.grey),
+                ),
+
+                const SizedBox(height: 32),
+
+                /// Email
+                TextFormField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(
+                    labelText: 'Email',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Введите email';
+                    }
+                    if (!value.contains('@')) {
+                      return 'Некорректный email';
+                    }
+                    return null;
+                  },
+                ),
+
+                const SizedBox(height: 16),
+
+                /// Пароль
+                TextFormField(
+                  controller: _passwordController,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Пароль',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.length < 6) {
+                      return 'Минимум 6 символов';
+                    }
+                    return null;
+                  },
+                ),
+
+                const SizedBox(height: 32),
+
+                /// Кнопка входа
+                ElevatedButton(
+                  onPressed: _login,
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  child: const Text('Войти'),
+                ),
+
+                const SizedBox(height: 16),
+
+                /// Переход к регистрации
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Нет аккаунта? '),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const RegisterScreen(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'Зарегистрироваться',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
